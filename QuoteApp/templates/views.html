@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %} Stored Quotes {% endblock %}
+
+{% block content %}
+
+<form method="POST">
+    <h3 align="center">Quote Id</h3>
+    <div class="form-group">
+        <label for="id">id</label>
+        <input 
+            type="id" 
+            id="id" 
+            name="id" 
+            class="form-control" 
+            placeholder="Enter id">
+        <br>
+        
+        <div align="center">
+            <button class="btn btn-primary" type="submit">Search </button>
+        </div>
+</form>
+</div>
+<br>
+{% if Quote %}
+         {{ Quote.Quote }} ~    {{ Quote.Author }}  
+        <br>
+{% endif %}
+
+{% endblock %}

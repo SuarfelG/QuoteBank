@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Quotes {% endblock %}
+
+{% block content %}
+<form method="POST">
+    <h3 align="center">Add Quote</h3>
+    <div class="form-group">
+        <label for="Quote">Quote</label>
+        <input 
+            type="Quote" 
+            id="Quote" 
+            name="Quote" 
+            class="form-control" 
+            placeholder="Add Quote">
+        
+        <br>
+            <label for="Author">Author</label>
+            <input 
+                type="author" 
+                id="author" 
+                name="author" 
+                class="form-control" 
+                placeholder="Author Name">
+            
+            <br>
+        <div align="center">
+            <button class="btn btn-primary" type="submit">Add Quote</button>
+        </div>
+</form>
+
+
+
+
+        
+</div>
+{% endblock %}
