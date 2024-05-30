@@ -1,4 +1,4 @@
-from flask import  Blueprint , render_template , request ,flash
+from flask import  Blueprint , render_template , request ,flash ,redirect,url_for
 from .models import Quotes
 
 view = Blueprint("view",__name__)
@@ -30,6 +30,26 @@ def SearchQuoteById():
         return render_template("searchId.html")
 
 
-@view.route("/")
+@view.route("/", methods=["POST","GET"])
 def home():
-    return render_template("base.html")
+    if request.method=="POST":
+        Name=request.form.get("Name")
+        Father_Name=request.form.get("Father")
+        Email=request.form.get("Email")
+        Password=request.form.get("Password")
+        
+
+        if (len(Father_Name)<4):
+                flash("Name is too short" , category="error")
+        elif (len(Father_Name)<4):
+                flash("Father_Name is too short" , category="error")
+        elif(len(Email)):
+                flash("Email is too short" , category="error")
+        elif(len(Password)<4):
+                flash("Password is too short" , category="error")
+        else:
+                flash("Signed in Successfuly" , category="success")
+                return redirect (url_for("view.SearchQuoteById"))
+        
+        
+    return render_template("signup.html")
