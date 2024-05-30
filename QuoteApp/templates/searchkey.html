@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %} Search By Keyword {% endblock %}
+
+{% block content %}
+
+
+
+<form method="POST">
+    <h3 align="center">Search By Keyword</h3>
+    <div class="form-group">
+        <label for="keyword">Keyword</label>
+        <input 
+            type="Keyword" 
+            id="Keyword" 
+            name="Keyword" 
+            class="form-control" 
+            placeholder="Enter Keyword">
+        <br>
+        
+        <div align="center">
+            <button class="btn btn-primary" type="submit">Search </button>
+        </div>
+</form>
+</div>
+<br>
+
+
+
+{% endblock %}

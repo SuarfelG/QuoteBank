@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %} Stored Quotes {% endblock %}
+{% block title %} Search By Keyword {% endblock %}
 
 {% block content %}
+
 
 <form method="POST">
     <h3 align="center">Quote Id</h3>
@@ -21,10 +22,6 @@
         </div>
 </form>
 </div>
-<br>
-{% if Quote %}
-         {{ Quote.Quote }} ~    {{ Quote.Author }}  
-        <br>
-{% endif %}
+<br><br><br>
 
 {% endblock %}

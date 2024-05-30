@@ -26,7 +26,8 @@
               <div class="navbar-nav">
                 <a class="nav-item nav-link" href="/">Home</a>
                 <a class="nav-item nav-link" href="/AddQuote">Add Quotes</a>
-                <a class="nav-item nav-link" href="/view">Quotes</a>
+                <a class="nav-item nav-link" href="/searchid">Search By Id</a>
+                <a class="nav-item nav-link" href="/searchkey">Search By Keyword</a>
                 <a class="nav-item nav-link" href="/delete">Delete Quote</a>
 
               </div>
@@ -61,7 +62,14 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
+<br><br><br>
 
+<div class="form-control m-2">
+{% if Quote %}
+         {{ Quote.Quote }} ~    {{ Quote.Author }}  
+        <br>
+{% endif %}
+</div>
 
 
      <script  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

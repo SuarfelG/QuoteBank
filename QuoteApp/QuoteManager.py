@@ -12,10 +12,10 @@ def AddQuotes():
             db.session.add(newquote)
             db.session.commit()
             flash("Quote Added Successfuly" ,category="success")
-            return redirect (url_for("view.viewQuote"))
+            return redirect (url_for("view.SearchQuoteById"))
         
-           
     return render_template ('AddQuotes.html')
+
 @quote.route('/delete' , methods=["POST","GET"])
 def DeleteQuote():
       if request.method=="POST":
