@@ -39,11 +39,11 @@ def home():
         Password=request.form.get("Password")
         
 
-        if (len(Father_Name)<4):
+        if (len(Name)<4):
                 flash("Name is too short" , category="error")
         elif (len(Father_Name)<4):
                 flash("Father_Name is too short" , category="error")
-        elif(len(Email)):
+        elif(len(Email)<4):
                 flash("Email is too short" , category="error")
         elif(len(Password)<4):
                 flash("Password is too short" , category="error")
