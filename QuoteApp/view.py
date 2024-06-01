@@ -1,5 +1,6 @@
 from flask import  Blueprint , render_template , request ,flash ,redirect,url_for
 from .models import Quotes,Authentication
+from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 
 view = Blueprint("view",__name__)
@@ -52,7 +53,8 @@ def home():
         elif(len(Password)<4):
                 flash("Password is too short" , category="error")
         else:
-                NewUser=Authentication(First_name=Name,Last_Name=Father_Name,Email=Email,Password=Password)
+                NewUser=Authentication(First_name=Name,Last_name=Father_Name,Email=Email,password=generate_password_hash(Password))
+                print(generate_password_hash(Password))
                 db.session.add(NewUser)
                 db.session.commit()
                 flash("Signed in Successfuly" , category="success")
