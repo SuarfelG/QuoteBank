@@ -1,5 +1,6 @@
 from flask import  Blueprint , render_template , request ,flash ,redirect,url_for
-from .models import Quotes
+from .models import Quotes,Authentication
+from . import db
 
 view = Blueprint("view",__name__)
 
@@ -38,8 +39,11 @@ def home():
         Email=request.form.get("Email")
         Password=request.form.get("Password")
         
+        EmailExist=Authentication.query.filter_by(Email=Email).first()
 
-        if (len(Name)<4):
+        if(EmailExist):
+                flash("Email Exist" , category="error")
+        elif (len(Name)<4):
                 flash("Name is too short" , category="error")
         elif (len(Father_Name)<4):
                 flash("Father_Name is too short" , category="error")
@@ -48,6 +52,9 @@ def home():
         elif(len(Password)<4):
                 flash("Password is too short" , category="error")
         else:
+                NewUser=Authentication(First_name=Name,Last_Name=Father_Name,Email=Email,Password=Password)
+                db.session.add(NewUser)
+                db.session.commit()
                 flash("Signed in Successfuly" , category="success")
                 return redirect (url_for("view.SearchQuoteById"))
         
