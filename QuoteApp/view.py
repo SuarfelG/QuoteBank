@@ -3,7 +3,13 @@ from .models import Quotes,Authentication
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 
+
 view = Blueprint("view",__name__)
+@view.route("/")
+def Home():
+       return render_template("auth.html")
+
+
 
 @view.route("/searchkey",methods=["POST","GET"])
 def SearchQuoteByKeyWord():
@@ -15,7 +21,6 @@ def SearchQuoteByKeyWord():
                         return render_template('base.html', Quote=x)
               flash("Quote Not Found" , category="error")
               return render_template("base.html")           
-
 
        return render_template("searchkey.html")
 
@@ -32,8 +37,8 @@ def SearchQuoteById():
         return render_template("searchId.html")
 
 
-@view.route("/", methods=["POST","GET"])
-def home():
+@view.route("/signup", methods=["POST","GET"])
+def signup():
     if request.method=="POST":
         Name=request.form.get("Name")
         Father_Name=request.form.get("Father")
@@ -54,7 +59,6 @@ def home():
                 flash("Password is too short" , category="error")
         else:
                 NewUser=Authentication(First_name=Name,Last_name=Father_Name,Email=Email,password=generate_password_hash(Password))
-                print(generate_password_hash(Password))
                 db.session.add(NewUser)
                 db.session.commit()
                 flash("Signed in Successfuly" , category="success")
@@ -62,3 +66,18 @@ def home():
         
         
     return render_template("signup.html")
+@view.route("/login", methods=["POST","GET"])
+def login():
+        if request.method=="POST":
+                Email=request.form.get("Email")
+                Password=request.form.get("Password")
+                EmailExist=Authentication.query.filter_by(Email=Email).first()
+                if EmailExist:
+                       if check_password_hash (EmailExist.password,Password):
+                              flash("Logged In Successfuly", category="success")
+                              return redirect (url_for("view.SearchQuoteByKeyWord"))
+                       else:
+                              flash("Passwords Don/'t Match", category="error")
+                              return render_template("login.html")
+
+        return render_template("login.html")
