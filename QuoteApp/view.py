@@ -35,6 +35,10 @@ def SearchQuoteById():
                         flash("Quote Not Found" , category="error")
                         return render_template("base.html")
         return render_template("searchId.html")
+@view.route("/viewall",methods=["POST","GET"])
+def viewall():
+        Quote=Quotes.query.all()
+        return render_template('SeeQuote.html', Quote=Quote)
 
 
 @view.route("/signup", methods=["POST","GET"])
@@ -62,8 +66,7 @@ def signup():
                 db.session.add(NewUser)
                 db.session.commit()
                 flash("Signed in Successfuly" , category="success")
-                return redirect (url_for("view.SearchQuoteById"))
-        
+                return redirect (url_for("view.SearchQuoteById"))       
         
     return render_template("signup.html")
 @view.route("/login", methods=["POST","GET"])
