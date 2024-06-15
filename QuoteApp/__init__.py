@@ -6,7 +6,7 @@ db=SQLAlchemy()
 def createApp():
     app=Flask(__name__)
     app.config["SECRET_KEY"]="kindlypaycashonfriendlygoodservice"
-    app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///quote.db"
+    app.config["SQLALCHEMY_DATABASE_URI"]='mysql+pymysql://root:goat300@127.0.0.1/quotesdb'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
 
     db.init_app(app)

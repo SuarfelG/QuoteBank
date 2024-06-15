@@ -6,7 +6,7 @@ class Quotes(db.Model,UserMixin):
 
     id=db.Column(db.Integer , primary_key=True)
     Author=db.Column(db.String(50) ,nullable=False)
-    Quote=db.Column(db.String(50) ,nullable=False)
+    Quote=db.Column(db.String(255) ,nullable=False)
 
 
 class Authentication(db.Model,UserMixin):
