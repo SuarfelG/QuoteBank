@@ -2,6 +2,7 @@ from flask import  Blueprint , render_template , request ,flash ,redirect,url_fo
 from .models import Quotes,Authentication
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
+from flask_login import login_required , login_user
 
 
 view = Blueprint("view",__name__)
@@ -12,6 +13,7 @@ def Home():
 
 
 @view.route("/searchkey",methods=["POST","GET"])
+@login_required
 def SearchQuoteByKeyWord():
        if request.method=="POST":
               keyword=request.form.get("Keyword")
@@ -24,7 +26,9 @@ def SearchQuoteByKeyWord():
 
        return render_template("searchkey.html")
 
+
 @view.route("/searchid",methods=["POST","GET"])
+@login_required
 def SearchQuoteById():
         if request.method=="POST":
                 id=request.form.get("id")
@@ -35,11 +39,32 @@ def SearchQuoteById():
                         flash("Quote Not Found" , category="error")
                         return render_template("base.html")
         return render_template("searchId.html")
-@view.route("/viewall",methods=["POST","GET"])
-def viewall():
-        Quote=Quotes.query.all()
-        return render_template('SeeQuote.html', Quote=Quote)
 
+
+@view.route("/SeeAll")
+@login_required
+def SearchAll():
+        quote=Quotes.query.all()
+        return quote
+
+
+
+@view.route("/login", methods=["POST","GET"])
+def login():
+        if request.method=="POST":
+                Email=request.form.get("Email")
+                Password=request.form.get("Password")
+                EmailExist=Authentication.query.filter_by(Email=Email).first()
+                if EmailExist:
+                       if check_password_hash (EmailExist.password,Password):
+                              flash("Logged In Successfuly", category="success")
+                              login_user(EmailExist, remember=True)
+                              return redirect (url_for("view.SearchQuoteByKeyWord"))
+                       else:
+                              flash("Passwords Don't Match", category="error")
+                              return render_template("login.html")
+
+        return render_template("login.html")
 
 @view.route("/signup", methods=["POST","GET"])
 def signup():
@@ -66,21 +91,9 @@ def signup():
                 db.session.add(NewUser)
                 db.session.commit()
                 flash("Signed in Successfuly" , category="success")
-                return redirect (url_for("view.SearchQuoteById"))       
+                login_user(NewUser, remember=True)
+
+                return redirect (url_for("view.SearchQuoteById"))
+        
         
     return render_template("signup.html")
-@view.route("/login", methods=["POST","GET"])
-def login():
-        if request.method=="POST":
-                Email=request.form.get("Email")
-                Password=request.form.get("Password")
-                EmailExist=Authentication.query.filter_by(Email=Email).first()
-                if EmailExist:
-                       if check_password_hash (EmailExist.password,Password):
-                              flash("Logged In Successfuly", category="success")
-                              return redirect (url_for("view.SearchQuoteByKeyWord"))
-                       else:
-                              flash("Passwords Don/'t Match", category="error")
-                              return render_template("login.html")
-
-        return render_template("login.html")

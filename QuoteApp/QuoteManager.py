@@ -2,11 +2,11 @@ from flask import  render_template , redirect , request , url_for , Blueprint ,f
 from flask_login import login_required
 from . import db
 from .models import Quotes
-quote=Blueprint('quote',__name__)
+QuoteManager=Blueprint('quote',__name__)
 
 
+@QuoteManager.route('/AddQuote' , methods=["POST","GET"])
 @login_required
-@quote.route('/AddQuote' , methods=["POST","GET"])
 def AddQuotes():
     if request.method=="POST":
             Quote=request.form.get("Quote")
@@ -15,7 +15,7 @@ def AddQuotes():
             for x in check:
                   print(x.Quote)
                   if Quote == x.Quote:
-                        flash("Quote Already Exists" , category="success")
+                        flash("Quote Already Exists" , category="error")
                         return redirect (url_for("view.SearchQuoteById"))
                   
             newquote=Quotes( Author=Author,Quote=Quote)
@@ -26,8 +26,8 @@ def AddQuotes():
         
     return render_template ('AddQuotes.html')
 
+@QuoteManager.route('/delete' , methods=["POST","GET"])
 @login_required
-@quote.route('/delete' , methods=["POST","GET"])
 def DeleteQuote():
       if request.method=="POST":
 
