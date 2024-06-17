@@ -2,12 +2,13 @@ from flask import  Blueprint , render_template , request ,flash ,redirect,url_fo
 from .models import Quotes,Authentication
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
-from flask_login import login_required , login_user
+from flask_login import login_required , login_user ,logout_user
 
 
 view = Blueprint("view",__name__)
 @view.route("/")
 def Home():
+       logout_user()
        return render_template("auth.html")
 
 
@@ -58,7 +59,7 @@ def login():
                 if EmailExist:
                        if check_password_hash (EmailExist.password,Password):
                               flash("Logged In Successfuly", category="success")
-                              login_user(EmailExist, remember=True)
+                              login_user(EmailExist)
                               return redirect (url_for("view.SearchQuoteByKeyWord"))
                        else:
                               flash("Passwords Don't Match", category="error")
@@ -91,7 +92,7 @@ def signup():
                 db.session.add(NewUser)
                 db.session.commit()
                 flash("Signed in Successfuly" , category="success")
-                login_user(NewUser, remember=True)
+                login_user(NewUser)
 
                 return redirect (url_for("view.SearchQuoteById"))
         
