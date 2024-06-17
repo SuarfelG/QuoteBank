@@ -13,7 +13,7 @@ def createApp():
     app.config['SECRET_KEY'] = "1234567890"
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:goat300@127.0.0.1/quotesdb'
     app.config["SESSION_TYPE"]="sqlalchemy"
-    app.config["PERMANENT_SESSION_LIFETIME"]=timedelta(minutes=1)
+    app.config["PERMANENT_SESSION_LIFETIME"]=timedelta(minutes=5)
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
