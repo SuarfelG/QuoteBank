@@ -11,7 +11,6 @@ def AddQuotes():
     if request.method=="POST":
             Quote=request.form.get("Quote")
             Author=request.form.get("author")
-            user_id=current_user.id
             check= Quotes.query.all()
             for x in check:
                   print(x.Quote)
@@ -19,7 +18,7 @@ def AddQuotes():
                         flash("Quote Already Exists" , category="error")
                         return redirect (url_for("view.SearchQuoteById"))
                   
-            newquote=Quotes( Author=Author,Quote=Quote , user_id=user_id)
+            newquote=Quotes( Author=Author,Quote=Quote )
             db.session.add(newquote)
             db.session.commit()
             flash("Quote Added Successfuly" ,category="success")
