@@ -2,7 +2,7 @@ from flask import  Blueprint , render_template , request ,flash ,redirect,url_fo
 from .models import Quotes,Authentication
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
-from flask_login import login_required , login_user ,logout_user
+from flask_login import login_required , login_user ,logout_user , current_user
 
 
 view = Blueprint("view",__name__)
@@ -21,7 +21,10 @@ def SearchQuoteByKeyWord():
               quot=Quotes.query.all()  
               for x in quot:
                  if keyword.lower() in (x.Quote).lower():
-                        return render_template('base.html', Quote=x)
+                        if x.user_id==current_user.id:
+                           return render_template('base.html', Quote=x)
+                        flash("Quote Not Found" , category="error")
+                        return render_template("base.html")
               flash("Quote Not Found" , category="error")
               return render_template("base.html")           
 
@@ -35,20 +38,14 @@ def SearchQuoteById():
                 id=request.form.get("id")
                 Quote = Quotes.query.filter_by(id=id).first()
                 if Quote:
-                        return render_template('base.html', Quote=Quote)
+                        if Quote.user_id==current_user.id:
+                                return render_template('base.html', Quote=Quote)
+                        flash("Quote Not Found" , category="error")
+                        return render_template("base.html")
                 else:
                         flash("Quote Not Found" , category="error")
                         return render_template("base.html")
         return render_template("searchId.html")
-
-
-@view.route("/SeeAll")
-@login_required
-def SearchAll():
-        quote=Quotes.query.all()
-        return quote
-
-
 
 @view.route("/login", methods=["POST","GET"])
 def login():
