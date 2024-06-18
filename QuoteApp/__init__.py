@@ -11,7 +11,7 @@ db = SQLAlchemy()
 def createApp():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = "1234567890"
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:goat300@127.0.0.1/quotesdb'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///quote.db'
     app.config["SESSION_TYPE"]="sqlalchemy"
     app.config["PERMANENT_SESSION_LIFETIME"]=timedelta(minutes=5)
 

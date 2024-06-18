@@ -9,7 +9,6 @@ class Authentication(db.Model, UserMixin):
     Last_name = db.Column(db.String(50), nullable=False)
     Email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(50), nullable=False, unique=True)
-    user_id = db.relationship('Quotes') 
 
 class Quotes(db.Model, UserMixin):
     __tablename__ = "Quote_Bank"
@@ -17,4 +16,3 @@ class Quotes(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     Author = db.Column(db.String(50), nullable=False)  
     Quote = db.Column(db.String(255), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey (Authentication.id), nullable=False)

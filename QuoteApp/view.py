@@ -2,7 +2,7 @@ from flask import  Blueprint , render_template , request ,flash ,redirect,url_fo
 from .models import Quotes,Authentication
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
-from flask_login import login_required , login_user ,logout_user , current_user
+from flask_login import login_required , login_user ,logout_user 
 
 
 view = Blueprint("view",__name__)
@@ -21,8 +21,7 @@ def SearchQuoteByKeyWord():
               quot=Quotes.query.all()  
               for x in quot:
                  if keyword.lower() in (x.Quote).lower():
-                        if x.user_id==current_user.id:
-                           return render_template('base.html', Quote=x)
+                        return render_template('base.html', Quote=x)
                         flash("Quote Not Found" , category="error")
                         return render_template("base.html")
               flash("Quote Not Found" , category="error")
@@ -38,8 +37,7 @@ def SearchQuoteById():
                 id=request.form.get("id")
                 Quote = Quotes.query.filter_by(id=id).first()
                 if Quote:
-                        if Quote.user_id==current_user.id:
-                                return render_template('base.html', Quote=Quote)
+                        return render_template('base.html', Quote=Quote)
                         flash("Quote Not Found" , category="error")
                         return render_template("base.html")
                 else:
