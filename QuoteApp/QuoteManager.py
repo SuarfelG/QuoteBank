@@ -18,7 +18,7 @@ def AddQuotes():
                         flash("Quote Already Exists" , category="error")
                         return redirect (url_for("view.SearchQuoteById"))
                   
-            newquote=Quotes( Author=Author,Quote=Quote)
+            newquote=Quotes( Author=Author,Quote=Quote )
             db.session.add(newquote)
             db.session.commit()
             flash("Quote Added Successfuly" ,category="success")
