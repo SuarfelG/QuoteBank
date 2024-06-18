@@ -22,7 +22,7 @@ def AddQuotes():
             newquote=Quotes( Author=Author,Quote=Quote , user_id=user_id)
             db.session.add(newquote)
             db.session.commit()
-            flash("Quote Added Successfuly" ,category="success")
+            flash(f"Quote Added Successfuly with Id {newquote.id}" ,category="success")
             return redirect (url_for("view.SearchQuoteById"))
         
     return render_template ('AddQuotes.html')

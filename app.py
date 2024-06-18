@@ -4,4 +4,4 @@ app=createApp()
 
 if __name__=="__main__":
     app=createApp()
-    app.run()
+    app.run(debug=True)
