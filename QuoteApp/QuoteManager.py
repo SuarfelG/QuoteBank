@@ -14,7 +14,6 @@ def AddQuotes():
             user_id=current_user.id
             check= Quotes.query.all()
             for x in check:
-                  print(x.Quote)
                   if Quote == x.Quote:
                         flash("Quote Already Exists" , category="error")
                         return redirect (url_for("view.SearchQuoteById"))
@@ -31,13 +30,16 @@ def AddQuotes():
 @login_required
 def DeleteQuote():
       if request.method=="POST":
-
+          
             id= request.form.get('id')
             quote=Quotes.query.filter_by(id=id).first()
             if quote:
-                  db.session.delete(quote)
-                  db.session.commit()
-                  flash("Quote Successfully Deleted",category="success")  
+               if current_user.id==quote.user_id:
+                        db.session.delete(quote)
+                        db.session.commit()
+                        flash("Quote Successfully Deleted",category="success")  
+               else:        
+                  flash("Quote doesn't exist" , category="error")
             else:
                   flash("Quote doesn't exist" , category="error")
             return render_template ("delete.html")
