@@ -14,7 +14,7 @@ def AddQuotes():
             user_id=current_user.id
             check= Quotes.query.all()
             for x in check:
-                  if Quote == x.Quote:
+                  if Quote == x.Quote and x.user_id==current_user.id:
                         flash("Quote Already Exists" , category="error")
                         return redirect (url_for("view.SearchQuoteById"))
                   
