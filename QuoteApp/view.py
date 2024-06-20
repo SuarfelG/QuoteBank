@@ -23,10 +23,9 @@ def SearchQuoteByKeyWord():
                  if keyword.lower() in (x.Quote).lower():
                         if x.user_id==current_user.id:
                            return render_template('base.html', Quote=x)
-                        flash("Quote Not Found" , category="error")
-                        return render_template("base.html")
               flash("Quote Not Found" , category="error")
-              return render_template("base.html")           
+              return render_template("base.html")
+              
 
        return render_template("searchkey.html")
 
